@@ -1,4 +1,5 @@
 # coding: utf-8
+import datetime
 from django.db import models
 
 
@@ -25,3 +26,72 @@ class DadosPessoais(models.Model):
     class Meta:
         verbose_name = 'Dados Pessoais'
         verbose_name_plural = 'Dados Pessoais'
+
+
+class Marca(models.Model):
+    nome = models.CharField(max_length=50, null=False)
+    categoria = models.CharField(max_length=50, null=False)
+    data_cadastro = models.DateTimeField(default=datetime.now())
+    data_alteracao = models.DateTimeField(null=False)
+
+
+def __str__(self):
+    return self.name
+
+
+class Meta:
+    verbose_name = 'Dados Marcas'
+    verbose_name_plural = 'Dados Marcas'
+
+
+class Produto(models.Model):
+    descricao = models.CharField(max_length=50, null=False)
+    preco = models.FloatField(null=False)
+    marca = models.ForeignKey(Marca)
+    data_cadastro = models.DateTimeField(default=datetime.now())
+    data_alteracao = models.DateTimeField(null=False)
+
+
+def __str__(self):
+    return self.nome
+
+
+class Funcionario(models.Model):
+    nome = models.CharField(max_length=255, null=False)
+    email = models.CharField(max_length=255, null=False)
+    cpf = models.CharField(max_length=255, null=False)
+    telefone = models.CharField(max_length=20, null=False)
+    celular = models.CharField(max_length=20, null=False)
+    fkCargo = models.ForeignKey(Cargo)
+    data_cadastro = models.DateTimeField(default=datetime.now())
+    data_alteracao = models.DateTimeField(null=False)
+
+
+def __str__(self):
+    return self.nome
+
+
+class Cargo(models.Model):
+    nome = models.CharField(max_length=50, null=False)
+    descricao = models.CharField(max_length=255, null=False)
+    data_cadastro = models.DateTimeField(default=datetime.now())
+    data_alteracao = models.DateTimeField(null=False)
+
+
+def __str__(self):
+    return self.nome
+
+
+class Usuario(models.Model):
+    nome = models.CharField(max_length=50, null=False)
+    email = models.CharField(max_length=255, null=False)
+    usuario = models.CharField(max_length=50, null=False)
+    senha = models.CharField(max_length=50, null=False)
+    data_cadastro = models.DateTimeField(default=datetime.now())
+
+
+data_alteracao = models.DateTimeField(null=False)
+
+
+def __str__(self):
+    return self.nome
