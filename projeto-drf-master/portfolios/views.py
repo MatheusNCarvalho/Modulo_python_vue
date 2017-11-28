@@ -1,6 +1,7 @@
 # coding: utf-8
 
-from .serializer import DadosPessoaisSerializer
+from .serializer import DadosPessoaisSerializer, FuncionarioSerializer
+
 from .models import DadosPessoais
 
 from rest_framework.response import Response
@@ -60,6 +61,8 @@ class PortfolioListView(APIView):
         serializer = self.serializer_class(DadosPessoais.objects.all(), many=True)
         return Response(serializer.data)
 
+
+
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -75,3 +78,18 @@ class PortfolioView(APIView):
         user = DadosPessoais.objects.get(pk=pk)
         serializer = DadosPessoaisSerializer(user)
         return Response(serializer.data)
+
+
+class FuncionarioView(APIView):
+    serializer_class = FuncionarioSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+
+
