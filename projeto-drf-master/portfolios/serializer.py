@@ -2,6 +2,14 @@
 
 from rest_framework import serializers
 from .models import DadosPessoais
+from .models import Marca
+from .models import Produto
+from .models import Funcionario
+from .models import Cargo
+from .models import Usuario
+
+
+
 
 
 class DadosPessoaisSerializer(serializers.ModelSerializer):
@@ -10,3 +18,34 @@ class DadosPessoaisSerializer(serializers.ModelSerializer):
         model = DadosPessoais
         depth = 1
         fields = ['id', 'name', 'adress', 'city', 'cep', 'phone', 'mobile']
+
+class MarcaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Marca
+        depth = 1
+        fields = ['nome', 'categoria']
+
+class ProdutoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Produto
+        depth = 1
+        fields = ['descricao', 'preco', 'marca']
+
+class FuncionarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Funcionario
+        depth = 1
+        fields = ['nome', 'email', 'cpf', 'telefone', 'celular']
+
+
+class CargoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cargo
+        depth = 1
+        fields = ['nome', 'descricao']
+
+class UsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        depth = 1
+        fields = ['nome', 'email', 'usuario']

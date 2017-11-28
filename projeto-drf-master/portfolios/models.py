@@ -1,5 +1,4 @@
 # coding: utf-8
-import datetime
 from django.db import models
 
 
@@ -31,8 +30,6 @@ class DadosPessoais(models.Model):
 class Marca(models.Model):
     nome = models.CharField(max_length=50, null=False)
     categoria = models.CharField(max_length=50, null=False)
-    data_cadastro = models.DateTimeField(default=datetime.now())
-    data_alteracao = models.DateTimeField(null=False)
 
 
 def __str__(self):
@@ -48,12 +45,25 @@ class Produto(models.Model):
     descricao = models.CharField(max_length=50, null=False)
     preco = models.FloatField(null=False)
     marca = models.ForeignKey(Marca)
-    data_cadastro = models.DateTimeField(default=datetime.now())
-    data_alteracao = models.DateTimeField(null=False)
 
 
 def __str__(self):
     return self.nome
+
+class Meta:
+    verbose_name = 'Dados Produto'
+    verbose_name_plural = 'Dados Produto'
+
+class Cargo(models.Model):
+    nome = models.CharField(max_length=50, null=False)
+    descricao = models.CharField(max_length=255, null=False)
+
+
+def __str__(self):
+    return self.nome
+class Meta:
+    verbose_name = 'Dados Cargo'
+    verbose_name_plural = 'Dados Cargo'
 
 
 class Funcionario(models.Model):
@@ -63,23 +73,15 @@ class Funcionario(models.Model):
     telefone = models.CharField(max_length=20, null=False)
     celular = models.CharField(max_length=20, null=False)
     fkCargo = models.ForeignKey(Cargo)
-    data_cadastro = models.DateTimeField(default=datetime.now())
-    data_alteracao = models.DateTimeField(null=False)
 
 
 def __str__(self):
     return self.nome
+class Meta:
+    verbose_name = 'Dados Funcionario'
+    verbose_name_plural = 'Dados Funcionario'
 
 
-class Cargo(models.Model):
-    nome = models.CharField(max_length=50, null=False)
-    descricao = models.CharField(max_length=255, null=False)
-    data_cadastro = models.DateTimeField(default=datetime.now())
-    data_alteracao = models.DateTimeField(null=False)
-
-
-def __str__(self):
-    return self.nome
 
 
 class Usuario(models.Model):
@@ -87,7 +89,6 @@ class Usuario(models.Model):
     email = models.CharField(max_length=255, null=False)
     usuario = models.CharField(max_length=50, null=False)
     senha = models.CharField(max_length=50, null=False)
-    data_cadastro = models.DateTimeField(default=datetime.now())
 
 
 data_alteracao = models.DateTimeField(null=False)
@@ -95,3 +96,7 @@ data_alteracao = models.DateTimeField(null=False)
 
 def __str__(self):
     return self.nome
+
+class Meta:
+    verbose_name = 'Dados Usuario'
+    verbose_name_plural = 'Dados Usuario'
