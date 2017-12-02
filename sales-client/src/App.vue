@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <Login v-if="!isLogged"></Login>
-        <Admin v-else>
+        <Admin>
+
         </admin>
     </div>
 </template>

@@ -1,2 +1,2 @@
 
-export const URL = "http://localhost:8282/sales-server/public"
+export const URL = "http://localhost:8000/api/"
