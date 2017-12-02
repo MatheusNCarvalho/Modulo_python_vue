@@ -1,8 +1,8 @@
 # coding: utf-8
 
-from .serializer import DadosPessoaisSerializer, FuncionarioSerializer
+from .serializer import DadosPessoaisSerializer, FuncionarioSerializer, CargoSerializer
 
-from .models import DadosPessoais
+from .models import DadosPessoais, Funcionario
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -83,6 +83,16 @@ class PortfolioView(APIView):
 class FuncionarioView(APIView):
     serializer_class = FuncionarioSerializer
 
+    # GET com argumentos
+    def get(self, request, pk, format=None):
+        funcionario = Funcionario.objects.get(pk=pk)
+        serializer = FuncionarioSerializer(funcionario)
+        return Response(serializer.data)
+
+    def get(self, request, format=None):
+        serializer = self.serializer_class(Funcionario.objects.all(), many=True)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -90,6 +100,23 @@ class FuncionarioView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+
+class CargoView(APIView):
+    serializer_class = CargoSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+
+
+
+
 
 
 
