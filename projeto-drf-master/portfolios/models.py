@@ -42,6 +42,7 @@ class Meta:
 
 
 class Produto(models.Model):
+
     descricao = models.CharField(max_length=50, null=False)
     preco = models.FloatField(null=False)
     marca = models.ForeignKey(Marca)
