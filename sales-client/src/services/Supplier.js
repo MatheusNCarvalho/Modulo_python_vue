@@ -4,7 +4,7 @@ import Vue from 'vue'
 export default class SupplierService{
 
     static getAll(){
-        return Vue.http.get(`${URL}/suppliers`);
+        return Vue.http.get(`${URL}/funcionarios/`);
     }
 
 }

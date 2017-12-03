@@ -3,7 +3,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-6">
-                    <h4>Cargos</h4>
+                    <h4>Marcas</h4>
                 </div>
                 <!--<div class="col-xs-6">-->
                 <!--<button @click.prevent="novoCargo()" class="btn btn-default pull-right">Novo</button>-->
@@ -26,7 +26,7 @@
                         <tr>
                             <th>Id</th>
                             <th width="50%">Nome</th>
-                            <th width="100%">Descrição</th>
+                            <th width="100%">Categoria</th>
                             <th width="20%">Ação</th>
                         </tr>
                         </thead>
@@ -34,7 +34,7 @@
                         <tr v-for="category in listaCategorias">
                             <td>{{category.id}}</td>
                             <td>{{category.nome}}</td>
-                            <td>{{category.descricao}}</td>
+                            <td>{{category.categoria}}</td>
 
                             <td role="button" @click.prevent="tryEdit(category)"><span
                                     class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label for="descricao">Descrição</label>
                                 <input type="input" class="form-control" id="descricao" placeholder="Descricao"
-                                       v-model="form.descricao">
+                                       v-model="form.categoria">
 
                             </div>
                             <button @click.prevent="Salvar" class="btn btn-default" :disabled="condicao">Salvar
@@ -111,7 +111,7 @@
                 form: {
                     id: null,
                     nome: '',
-                    descricao: ''
+                    categoria: ''
                 },
                 condicao: false
 
@@ -136,7 +136,7 @@
                 this.condicao = true
 
                 if (this.form.id == null) {
-                    DadaService.post("cargos",this.form)
+                    DadaService.post("marcas",this.form)
                         .then(response => {
                                 this.condicao = false
                                 this.carregarCargos()
@@ -147,7 +147,7 @@
                                 console.log("Error: ", error)
                             }).finally(onFinally())
                 } else {
-                    DadaService.put("cargos", this.form, this.form.id)
+                    DadaService.put("marcas", this.form, this.form.id)
                         .then(response => {
                                 this.condicao = false
                                 console.log("Editando",response);
@@ -159,10 +159,10 @@
 
             },
             carregarCargos() {
-                DadaService.getAll("cargos")
+                DadaService.getAll("marcas")
                     .then(response => {
                             this.listaCategorias = JSON.parse(response.data)
-                            /// console.log(JSON.parse( response.data))
+                            /// console.log(JSON.parse( response.data))ss
 
                         },
                         error => {
@@ -170,6 +170,8 @@
                         }).finally(function () {
 
                 })
+
+
             },
             tryEdit(category) {
 
@@ -180,7 +182,7 @@
                     this.Limpar()
                 }
                 if (confirm(`Deseja apagar " ${this.form.nome} " ?`)) {
-                    DadaService.delete("cargos",this.form.id)
+                    DadaService.delete("marcas",this.form.id)
                         .then(response => {
                                 this.carregarCargos()
                             },

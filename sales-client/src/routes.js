@@ -1,6 +1,7 @@
 import Users from './components/Users.vue'
 import Suppliers from './components/Suppliers.vue'
 import Categories from './components/Categories.vue'
+import Marcas from './components/Marcas.vue'
 import Products from './components/Products.vue'
 import Sales from './components/Sales.vue'
 import PDV from './components/PDV.vue'
@@ -15,6 +16,9 @@ const Routes = {
     },
     '/categories': {
         component: Categories
+    },
+    '/marcas': {
+        component: Marcas
     },
     '/products': {
         component: Products
