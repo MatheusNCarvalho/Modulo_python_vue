@@ -11,52 +11,7 @@ from rest_framework.views import APIView
 
 from rest_framework import status
 
-from django.shortcuts import render
-
-
-# Codigo do projeto antigo
-
-
-def portfolio_exibir(request):
-    pessoa = DadosPessoais.objects.all()
-    context = {'pessoa': pessoa}
-
-    return render(request, 'portfolios/portfolio_exibir.html', context)
-
-
-'''
--- Primeiro Código --
-class PortfolioListView(APIView):
-    serializer_class = DadosPessoaisSerializer
-
-    def get(self, request, format=None):
-        serializer = self.serializer_class(DadosPessoais.objects.all(), many=True)
-        return Response(serializer.data)
-'''
-
-'''
- -- Segundo Código --
-
-class PortfolioListView(APIView):
-    serializer_class = DadosPessoaisSerializer
-
-    def get(self, request, format=None):
-        serializer = self.serializer_class(DadosPessoais.objects.all(), many=True)
-        return Response(serializer.data)
-
-
-class PortfolioView(APIView):
-
-    def get(self, request, pk, format=None):
-        user = DadosPessoais.objects.get(pk=pk)
-        serializer = DadosPessoaisSerializer(user)
-        return Response(serializer.data)
-
-
-'''
-
-
-class PortfolioListView(APIView):
+''' class PortfolioListView(APIView):
     serializer_class = DadosPessoaisSerializer
 
     def get(self, request, format=None):
@@ -70,16 +25,16 @@ class PortfolioListView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+'''
 
-
-class PortfolioView(APIView):
+'''class PortfolioView(APIView):
     def get(self, request, pk, format=None):
         user = DadosPessoais.objects.get(pk=pk)
         serializer = DadosPessoaisSerializer(user)
         return Response(serializer.data)
+'''
 
-
-class FuncionarioView(APIView):
+'''class FuncionarioView(APIView):
     serializer_class = FuncionarioSerializer
 
     # GET com argumentos
@@ -99,19 +54,29 @@ class FuncionarioView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+'''
 
-
+# Classe view responsável pelos metodos Get e Post da model Cargo
 class CargoListAndPost(APIView):
+    # Implementação do serializador dos dados
     serializer_class = CargoSerializer
 
+    # realizando o get, enviando todos os dados armazenados no banco
     def get(self, request, format=None):
+        # pega os dados serializados da model Cargo
         serializer = self.serializer_class(Cargo.objects.all(), many=True)
+        # envia via JSON os dados para o requisitante
         return Response(serializer.data)
 
+    # realizando o post, recebendo os dados do front-end
     def post(self, request, format=None):
+        # recebe dos dados serialializados através do Post que o front-end envia
         serializer = self.serializer_class(data=request.data)
+        # validação do serializer
         if serializer.is_valid():
+            # envia os dados para o serializer realizar a tradução e salvar na model
             serializer.save()
+            # envia via JSON os dados que foram armazenados e o status da operação
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
@@ -122,23 +87,26 @@ class CargoById(APIView):
 
     def get_object(self, pk):
         try:
+            # retorna a chave do cargo
             return Cargo.objects.get(pk=pk)
         except Cargo.DoesNotExist:
             raise Http404
 
-    # GET com argumentos
+    # get com argumentos
     def get(self, request, pk, format=None):
 
+        # recebe a chave do objeto
         cargo = self.get_object(pk)
-
+        # recebe o Cargo filtrado pela chave primaria
         serializer = CargoSerializer(cargo)
+        # envia para o front-end o cargo selecionado
         return Response(serializer.data)
 
-    # REALIZANDO O PUT
+    # realizando o put
     def put(self, request, pk, format=None):
 
         cargo = self.get_object(pk)
-
+        # recebe os dados, informando a chave
         serializer = self.serializer_class(cargo, data=request.data)
 
         if serializer.is_valid():
@@ -146,13 +114,12 @@ class CargoById(APIView):
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    # realizando o delete
     def delete(self, request, pk, format=None):
 
         cargo = self.get_object(pk)
-
+        # deleta o objeto passando a chave
         cargo.delete()
-
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

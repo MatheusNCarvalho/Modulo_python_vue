@@ -34,7 +34,6 @@ class Marca(models.Model):
     def __str__(self):
         return self.name
 
-
     class Meta:
         verbose_name = 'Dados Marcas'
         verbose_name_plural = 'Dados Marcas'

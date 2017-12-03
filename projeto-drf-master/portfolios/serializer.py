@@ -7,17 +7,16 @@ from .models import Produto
 from .models import Funcionario
 from .models import Cargo
 from .models import Usuario
-
-
-
-
-
+ #Classes responsáveis pela tradução dos dados na recepsão ou envio de dados via JSON.
 class DadosPessoaisSerializer(serializers.ModelSerializer):
-
     class Meta:
+        # classe que que terão seus dados serializados
         model = DadosPessoais
         depth = 1
+        #atributos da classe Dados pessoais na models.py
+
         fields = ['id', 'name', 'adress', 'city', 'cep', 'phone', 'mobile']
+
 
 class MarcaSerializer(serializers.ModelSerializer):
     class Meta:
