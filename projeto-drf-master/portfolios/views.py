@@ -2,9 +2,9 @@
 from django.http import Http404
 from rest_framework.decorators import api_view
 
-from .serializer import DadosPessoaisSerializer, FuncionarioSerializer, CargoSerializer
+from .serializer import DadosPessoaisSerializer, MarcaSerializer, ProdutoSerializer, FuncionarioSerializer, CargoSerializer, UsuarioSerializer
 
-from .models import DadosPessoais, Funcionario, Cargo
+from .models import DadosPessoais, Marca, Produto, Funcionario, Cargo, Usuario
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -154,3 +154,224 @@ class CargoById(APIView):
         cargo.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class MarcaListAndPost(APIView):
+    serializer_class = MarcaSerializer
+
+    def get(self, request, format=None):
+        serializer = self.serializer_class(Marca.objects.all(), many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+
+class MarcaById(APIView):
+    serializer_class = MarcaSerializer
+
+    def get_object(self, pk):
+        try:
+            return Marca.objects.get(pk=pk)
+        except Marca.DoesNotExist:
+            raise Http404
+
+    # GET com argumentos
+    def get(self, request, pk, format=None):
+
+        marca = self.get_object(pk)
+
+        serializer = MarcaSerializer(marca)
+        return Response(serializer.data)
+
+    # REALIZANDO O PUT
+    def put(self, request, pk, format=None):
+
+        marca = self.get_object(pk)
+
+        serializer = self.serializer_class(marca, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+
+        marca = self.get_object(pk)
+
+        marca.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ProdutoListAndPost(APIView):
+    serializer_class = ProdutoSerializer
+
+    def get(self, request, format=None):
+        serializer = self.serializer_class(Produto.objects.all(), many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+
+class ProdutoById(APIView):
+    serializer_class = ProdutoSerializer
+
+    def get_object(self, pk):
+        try:
+            return Produto.objects.get(pk=pk)
+        except Produto.DoesNotExist:
+            raise Http404
+
+    # GET com argumentos
+    def get(self, request, pk, format=None):
+
+        produto = self.get_object(pk)
+
+        serializer = ProdutoSerializer(produto)
+        return Response(serializer.data)
+
+    # REALIZANDO O PUT
+    def put(self, request, pk, format=None):
+
+        produto = self.get_object(pk)
+
+        serializer = self.serializer_class(produto, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+
+        produto = self.get_object(pk)
+
+        produto.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class FuncionarioListAndPost(APIView):
+    serializer_class = FuncionarioSerializer
+
+    def get(self, request, format=None):
+        serializer = self.serializer_class(Funcionario.objects.all(), many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+
+class FuncionarioById(APIView):
+    serializer_class = FuncionarioSerializer
+
+    def get_object(self, pk):
+        try:
+            return Funcionario.objects.get(pk=pk)
+        except Funcionario.DoesNotExist:
+            raise Http404
+
+    # GET com argumentos
+    def get(self, request, pk, format=None):
+
+        funcionario = self.get_object(pk)
+
+        serializer = ProdutoSerializer(funcionario)
+        return Response(serializer.data)
+
+    # REALIZANDO O PUT
+    def put(self, request, pk, format=None):
+
+        funcionario = self.get_object(pk)
+
+        serializer = self.serializer_class(funcionario, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+
+        funcionario = self.get_object(pk)
+
+        funcionario.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UsuarioListAndPost(APIView):
+    serializer_class = UsuarioSerializer
+
+    def get(self, request, format=None):
+        serializer = self.serializer_class(UsuarioSerializer.objects.all(), many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+
+class UsuarioById(APIView):
+    serializer_class = UsuarioSerializer
+
+    def get_object(self, pk):
+        try:
+            return Usuario.objects.get(pk=pk)
+        except Usuario.DoesNotExist:
+            raise Http404
+
+    # GET com argumentos
+    def get(self, request, pk, format=None):
+
+        usuario = self.get_object(pk)
+
+        serializer = ProdutoSerializer(usuario)
+        return Response(serializer.data)
+
+    # REALIZANDO O PUT
+    def put(self, request, pk, format=None):
+
+        usuario = self.get_object(pk)
+
+        serializer = self.serializer_class(usuario, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+
+        usuario = self.get_object(pk)
+
+        usuario.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

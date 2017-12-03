@@ -25,8 +25,7 @@ SECRET_KEY = '*+6=+e3^tc(##_&)48+u!v^=&g66t_#!g)!+fezx4rf$@rm*(k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -87,6 +86,7 @@ DATABASES = {
         'PASSWORD': '@root#2017%',
         'HOST': 'ifg.redesbrasil.com',
         'PORT': '53306',
+        'OPTIONS':{'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
     }
 }
 

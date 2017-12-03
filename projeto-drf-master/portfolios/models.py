@@ -31,40 +31,39 @@ class Marca(models.Model):
     nome = models.CharField(max_length=50, null=False)
     categoria = models.CharField(max_length=50, null=False)
 
+    def __str__(self):
+        return self.name
 
-def __str__(self):
-    return self.name
 
-
-class Meta:
-    verbose_name = 'Dados Marcas'
-    verbose_name_plural = 'Dados Marcas'
+    class Meta:
+        verbose_name = 'Dados Marcas'
+        verbose_name_plural = 'Dados Marcas'
 
 
 class Produto(models.Model):
 
     descricao = models.CharField(max_length=50, null=False)
     preco = models.FloatField(null=False)
-    FkMarca = models.IntegerField(null=False)
+    fkMarca = models.IntegerField(null=False)
 
 
-def __str__(self):
-    return self.nome
+    def __str__(self):
+        return self.nome
 
-class Meta:
-    verbose_name = 'Dados Produto'
-    verbose_name_plural = 'Dados Produto'
+    class Meta:
+        verbose_name = 'Dados Produto'
+        verbose_name_plural = 'Dados Produto'
 
 class Cargo(models.Model):
     nome = models.CharField(max_length=50, null=False)
     descricao = models.CharField(max_length=255, null=False)
 
 
-def __str__(self):
-    return self.nome
-class Meta:
-    verbose_name = 'Dados Cargo'
-    verbose_name_plural = 'Dados Cargo'
+    def __str__(self):
+        return self.nome
+    class Meta:
+        verbose_name = 'Dados Cargo'
+        verbose_name_plural = 'Dados Cargo'
 
 
 class Funcionario(models.Model):
@@ -76,11 +75,11 @@ class Funcionario(models.Model):
     fkCargo = models.IntegerField(null=False)
 
 
-def __str__(self):
-    return self.nome
-class Meta:
-    verbose_name = 'Dados Funcionario'
-    verbose_name_plural = 'Dados Funcionario'
+    def __str__(self):
+        return self.nome
+    class Meta:
+        verbose_name = 'Dados Funcionario'
+        verbose_name_plural = 'Dados Funcionario'
 
 
 
@@ -90,12 +89,11 @@ class Usuario(models.Model):
     email = models.CharField(max_length=255, null=False)
     usuario = models.CharField(max_length=50, null=False)
     senha = models.CharField(max_length=50, null=False)
-    data_alteracao = models.DateTimeField()
 
 
-def __str__(self):
-    return self.nome
+    def __str__(self):
+        return self.nome
 
-class Meta:
-    verbose_name = 'Dados Usuario'
-    verbose_name_plural = 'Dados Usuario'
+    class Meta:
+        verbose_name = 'Dados Usuario'
+        verbose_name_plural = 'Dados Usuario'

@@ -26,16 +26,17 @@ class MarcaSerializer(serializers.ModelSerializer):
         fields = ['id','nome', 'categoria']
 
 class ProdutoSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Produto
         depth = 1
-        fields = ['id','descricao', 'preco', 'marca']
+        fields = ['id','descricao', 'preco', 'fkMarca']
 
 class FuncionarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funcionario
         depth = 1
-        fields = ['id','nome', 'email', 'cpf', 'telefone', 'celular']
+        fields = ['id','nome', 'email', 'cpf', 'telefone', 'celular', 'fkCargo']
 
 
 class CargoSerializer(serializers.ModelSerializer):
@@ -48,4 +49,4 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         depth = 1
-        fields = ['id','nome', 'email', 'usuario']
+        fields = ['id','nome', 'email', 'usuario', 'senha']
