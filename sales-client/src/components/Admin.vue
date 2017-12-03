@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-                <a class="navbar-brand" href="#">Sistema de vendas</a>
+                <a class="navbar-brand" href="#">Sistema com Django e Vue</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -18,10 +18,8 @@
                     <li v-link-active><a v-link="{ path: '/suppliers' }">Funcionarios</a></li>
                     <li v-link-active><a v-link="{ path: '/categories' }">Cargos</a></li>
                     <li v-link-active><a v-link="{ path: '/marcas' }">Marcas</a></li>
-                    <li v-link-active><a v-link="{ path: '/products' }">Produtos</a></li>
-                    <li v-link-active><a v-link="{ path: '/sales' }">Vendas</a></li>
-                    <li v-link-active><a v-link="{ path: '/pdv' }">PDV</a></li>
-                    <li v-link-active><a v-link="{ path: '/logout' }">Logout</a></li>
+                    <li v-link-active><a v-link="{ path: '/produtos' }">Produtos</a></li>
+
                 </ul>
             </div>
         </div>

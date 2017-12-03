@@ -3,7 +3,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-6">
-                    <h4>Funcionarios </h4>
+                    <h4>Produtos </h4>
                 </div>
                 <div class="col-xs-6">
                     <!--<button @click.prevent="newSupplier" class="btn btn-default pull-right">Novo</button>-->
@@ -25,16 +25,14 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th width="50%">Nome</th>
-                            <th width="50%">CPF</th>
-                            <th width="30%">Ações</th>
+                            <th width="50%">Descrição</th>
+                            <th width="20%">Ações</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="supplier in funcionarios">
+                        <tr v-for="supplier in produtos">
                             <td>{{supplier.id}}</td>
-                            <td>{{supplier.nome}}</td>
-                            <td>{{supplier.cpf}}</td>
+                            <td>{{supplier.descricao}}</td>
                             <td role="button" @click.prevent="editar(supplier)"><span
                                     class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 
@@ -58,45 +56,24 @@
                                        readonly>
                             </div>
                             <div class="form-group">
-                                <label for="name">Nome</label>
-                                <input type="input" class="form-control" id="name" placeholder="Nome"
-                                       v-model="form.nome">
+                                <label for="descricao">Descrição</label>
+                                <input type="input" class="form-control" id="descricao" placeholder="Descricao"
+                                       v-model="form.descricao">
 
-                                <label for="email">Email</label>
-                                <input type="input" class="form-control" id="email" placeholder="Email"
-                                       v-model="form.email">
+                                <label for="preco">Preço</label>
+                                <input type="input" class="form-control" id="preco" placeholder="Preco"
+                                       v-model="form.preco">
 
                                 <!--<label for="name">Endereço</label>-->
                                 <!--<textarea class="form-control" rows="5" id="address" v-model="form.address"></textarea>-->
 
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-sm-6">
-                                        <label for="cpf">CPF</label>
-                                        <input type="input" class="form-control" id="cpf" placeholder="CPF"
-                                               v-model="form.cpf">
-                                    </div>
 
-                                    <div class="col-sm-6">
-                                        <label for="cpf">Telefone</label>
-                                        <input type="input" class="form-control" id="telefone" placeholder="Telefone"
-                                               v-model="form.telefone">
-                                    </div>
-
-                                </div>
-                            </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <label for="celular">Celular</label>
-                                    <input type="input" class="form-control" id="celular" placeholder="Celular"
-                                           v-model="form.celular">
-                                </div>
-
                                 <div class="form-group col-xs-12 col-sm-6">
-                                    <label for="idCargo">Cargo</label>
-                                    <select id="idCategory" class="form-control" v-model="cargo">
+                                    <label for="idCargo">Marca</label>
+                                    <select id="idCategory" class="form-control" v-model="marca">
                                         <option v-for="category in categories" value="{{category.id}}">
                                             {{category.nome}}
                                         </option>
@@ -136,17 +113,17 @@
             Loading, Error, Pagination
         },
         created() {
-            this.loadFuncionarios();
-            this.carregarCargos();
+            this.loadProdutos();
+            this.carregarMarcas();
         },
         data() {
             return {
                 condicao: false,
                 categories: [],
                 keyword: "",
-                funcionarios: [],
+                produtos: [],
                 form: {},
-                cargo: null
+                marca: null
 
             }
         },
@@ -158,13 +135,13 @@
                 let self = this;
                 self.condicao = true
 
-                self.form['fkCargo'] = self.cargo
+                self.form['fkMarca'] = self.marca
 
                 if (self.form.id == null) {
-                    DataService.post("funcionarios", self.form)
+                    DataService.post("produtos", self.form)
                         .then(response => {
                                 self.condicao = false
-                                self.loadFuncionarios()
+                                self.loadProdutos()
                             },
                             error => {
 
@@ -172,10 +149,10 @@
                         self.Limpar()
                     })
                 } else {
-                    DataService.put("funcionarios", self.form, self.form.id)
+                    DataService.put("produtos", self.form, self.form.id)
                         .then(response => {
                                 self.condicao = false
-                                self.loadFuncionarios()
+                                self.loadProdutos()
                             },
                             error => {
 
@@ -189,34 +166,34 @@
             editar(supplier) {
 
                 for (var i = 0; i < this.categories.length; i++) {
-                    if (this.categories[i].id === supplier.fkCargo) {
-                        this.cargo = this.categories[i].id
+                    if (this.categories[i].id === supplier.fkMarca) {
+                        this.marca = this.categories[i].id
                         this.form = supplier
                     }
                 }
             },
             deleteSupplier() {
-                if (confirm(`Deseja apagar " ${this.form.nome} " ?`)) {
+                if (confirm(`Deseja apagar " ${this.form.descrcao} " ?`)) {
 
                     let t = this;
-                    DataService.delete("funcionarios", this.form.id)
+                    DataService.delete("produtos", this.form.id)
                         .then(response => {
-                                t.carregarCargos()
+                                t.loadProdutos()
                             },
                             error => {
 
                             }).finally(function () {
-                                t.Limpar()
+                        t.Limpar()
 
                     })
 
                 }
             },
-            loadFuncionarios() {
+            loadProdutos() {
                 let t = this;
-                DataService.getAll("funcionarios")
+                DataService.getAll("produtos")
                     .then(response => {
-                            t.funcionarios = JSON.parse(response.data)
+                            t.produtos = JSON.parse(response.data)
                         },
                         error => {
                             console.log("Error: ", error)
@@ -224,8 +201,8 @@
 
                 })
             },
-            carregarCargos() {
-                DataService.getAll("cargos")
+            carregarMarcas() {
+                DataService.getAll("marcas")
                     .then(response => {
                             this.categories = JSON.parse(response.data)
                             /// console.log(JSON.parse( response.data))
