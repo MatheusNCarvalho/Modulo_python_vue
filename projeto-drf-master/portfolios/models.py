@@ -45,7 +45,7 @@ class Produto(models.Model):
 
     descricao = models.CharField(max_length=50, null=False)
     preco = models.FloatField(null=False)
-    marca = models.ForeignKey(Marca)
+    FkMarca = models.IntegerField(null=False)
 
 
 def __str__(self):
@@ -73,7 +73,7 @@ class Funcionario(models.Model):
     cpf = models.CharField(max_length=255, null=False)
     telefone = models.CharField(max_length=20, null=False)
     celular = models.CharField(max_length=20, null=False)
-    fkCargo = models.ForeignKey(Cargo)
+    fkCargo = models.IntegerField(null=False)
 
 
 def __str__(self):
@@ -90,9 +90,7 @@ class Usuario(models.Model):
     email = models.CharField(max_length=255, null=False)
     usuario = models.CharField(max_length=50, null=False)
     senha = models.CharField(max_length=50, null=False)
-
-
-data_alteracao = models.DateTimeField(null=False)
+    data_alteracao = models.DateTimeField()
 
 
 def __str__(self):
