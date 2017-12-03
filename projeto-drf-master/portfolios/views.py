@@ -292,7 +292,7 @@ class UsuarioListAndPost(APIView):
     serializer_class = UsuarioSerializer
 
     def get(self, request, format=None):
-        serializer = self.serializer_class(UsuarioSerializer.objects.all(), many=True)
+        serializer = self.serializer_class(Usuario.objects.all(), many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):

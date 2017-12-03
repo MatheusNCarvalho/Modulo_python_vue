@@ -3,7 +3,7 @@ from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
 # importação das classes do arquivo views.py
-from portfolios.views import FuncionarioListAndPost, FuncionarioById,CargoListAndPost, CargoById, \
+from portfolios.views import FuncionarioListAndPost, FuncionarioById, CargoListAndPost, CargoById, \
     MarcaListAndPost, MarcaById, ProdutoListAndPost, ProdutoById, UsuarioListAndPost, UsuarioById
 
 helper_patterns = [
